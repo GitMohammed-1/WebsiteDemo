@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammed — Backend & Systems Engineer</title>
+<meta name="description" content="Portfolio of Mohammed, backend and systems engineer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF1EC;
+    --panel:#FFFFFF;
+    --ink:#12181F;
+    --ink-soft:#51595F;
+    --line:#D7DED7;
+    --accent:#2F6F5E;
+    --accent-soft:#E4EEE9;
+    --warn:#E0932E;
+    --dark-bg:#0E1A17;
+    --dark-bg-2:#132420;
+    --dark-text:#E9F2ED;
+    --dark-text-soft:#9FB6AD;
+    --dark-line:#26443A;
+    --mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px;}
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(238,241,236,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:56px;
+  }
+  .brand{
+    font-family:var(--mono); font-weight:700; font-size:14px;
+    letter-spacing:0.02em; text-decoration:none; color:var(--ink);
+  }
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:11px; color:var(--accent);
+    margin-left:10px; font-weight:500;
+  }
+  .status-pill .dot{
+    width:6px; height:6px; border-radius:50%; background:var(--accent);
+    box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  nav{display:flex; gap:26px;}
+  nav a{
+    font-family:var(--mono); font-size:12px; text-decoration:none;
+    color:var(--ink-soft); letter-spacing:0.03em;
+  }
+  nav a:hover{color:var(--ink);}
+  .nav-toggle{display:none;}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 40px;}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--accent);
+    letter-spacing:0.06em; text-transform:uppercase; margin:0 0 14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:"//"; color:var(--ink-soft); opacity:0.5;}
+  h1.name{
+    font-family:var(--mono); font-weight:800; font-size:clamp(40px,7vw,72px);
+    margin:0 0 6px; letter-spacing:-0.01em; line-height:1.02;
+  }
+  .role{
+    font-size:clamp(16px,2.4vw,20px); color:var(--ink-soft); margin:0 0 28px;
+    max-width:560px;
+  }
+
+  .terminal{
+    background:var(--dark-bg);
+    border-radius:10px;
+    border:1px solid var(--dark-line);
+    overflow:hidden;
+    max-width:640px;
+    box-shadow:0 18px 40px -20px rgba(14,26,23,0.5);
+  }
+  .terminal-head{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px; border-bottom:1px solid var(--dark-line);
+    background:var(--dark-bg-2);
+  }
+  .terminal-head span{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .terminal-head span:nth-child(1){background:#E0932E;}
+  .terminal-head span:nth-child(2){background:#4FA37E;}
+  .terminal-head span:nth-child(3){background:#3E6B5C;}
+  .terminal-title{
+    font-family:var(--mono); font-size:11px; color:var(--dark-text-soft);
+    margin-left:6px;
+  }
+  .terminal-body{
+    padding:18px 16px 20px;
+    font-family:var(--mono); font-size:13px; color:var(--dark-text);
+    min-height:96px;
+  }
+  .terminal-body .line{margin:0 0 6px; color:var(--dark-text-soft);}
+  .terminal-body .line b{color:var(--dark-text); font-weight:500;}
+  .terminal-body .prompt{color:#6FCF97;}
+  .caret{
+    display:inline-block; width:7px; height:14px; background:#6FCF97;
+    margin-left:2px; vertical-align:-2px; animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .metrics{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:10px; overflow:hidden;
+    max-width:640px; margin-top:22px;
+  }
+  .metric{background:var(--panel); padding:16px 18px;}
+  .metric .num{font-family:var(--mono); font-weight:700; font-size:22px; color:var(--ink);}
+  .metric .label{font-family:var(--mono); font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em; margin-top:4px;}
+
+  /* ---------- sections ---------- */
+  section{padding:72px 0;}
+  section + section{border-top:1px solid var(--line);}
+  .section-head{margin-bottom:36px;}
+  .section-head .eyebrow{margin-bottom:8px;}
+  .section-head h2{
+    font-family:var(--mono); font-weight:700; font-size:26px; margin:0;
+    letter-spacing:-0.01em;
+  }
+  .lede{color:var(--ink-soft); font-size:15px; margin-top:8px; max-width:560px;}
+
+  .about p{max-width:640px; font-size:15.5px; color:var(--ink); margin:0 0 16px;}
+  .about p.soft{color:var(--ink-soft);}
+
+  /* ---------- endpoint cards (projects) ---------- */
+  .endpoints{display:flex; flex-direction:column; gap:14px;}
+  .endpoint{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:20px 22px; transition:border-color .15s ease, transform .15s ease;
+  }
+  .endpoint:hover{border-color:var(--accent); transform:translateY(-2px);}
+  .endpoint-top{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:13px; margin-bottom:10px;
+  }
+  .method{
+    font-weight:700; font-size:11px; padding:3px 8px; border-radius:4px;
+    letter-spacing:0.03em;
+  }
+  .method.get{background:var(--accent-soft); color:var(--accent);}
+  .method.post{background:#FBEBD8; color:var(--warn);}
+  .path{color:var(--ink); font-weight:500;}
+  .status-code{
+    margin-left:auto; font-size:11px; color:#4FA37E; font-weight:600;
+  }
+  .endpoint h3{
+    font-family:var(--sans); font-size:17px; font-weight:600; margin:0 0 6px;
+  }
+  .endpoint p{color:var(--ink-soft); font-size:14px; margin:0 0 14px; max-width:560px;}
+  .endpoint-meta{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .tags{display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{
+    font-family:var(--mono); font-size:11px; color:var(--ink-soft);
+    background:var(--bg); border:1px solid var(--line); padding:3px 8px; border-radius:5px;
+  }
+  .endpoint-links{display:flex; gap:14px;}
+  .endpoint-links a{
+    font-family:var(--mono); font-size:12px; color:var(--accent); text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  .endpoint-links a:hover{border-color:var(--accent);}
+
+  /* ---------- log (skills) ---------- */
+  .log{
+    background:var(--dark-bg); border-radius:10px; border:1px solid var(--dark-line);
+    padding:22px 24px; font-family:var(--mono); font-size:13px;
+  }
+  .log .entry{
+    display:grid; grid-template-columns:150px 70px 1fr; gap:14px;
+    padding:9px 0; border-bottom:1px solid var(--dark-line); color:var(--dark-text-soft);
+  }
+  .log .entry:last-child{border-bottom:none;}
+  .log .ts{color:#5C7A6E;}
+  .log .lvl{color:var(--warn); font-weight:600;}
+  .log .lvl.ok{color:#6FCF97;}
+  .log .msg{color:var(--dark-text);}
+  .log .msg b{color:#6FCF97; font-weight:500;}
+
+  /* ---------- contact ---------- */
+  .contact-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px;}
+  .req-block{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:24px;
+  }
+  .req-head{
+    font-family:var(--mono); font-size:12px; color:var(--accent); margin-bottom:16px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .req-head .method.post{margin:0;}
+  form{display:flex; flex-direction:column; gap:14px;}
+  label{font-family:var(--mono); font-size:11px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em;}
+  input, textarea{
+    font-family:var(--sans); font-size:14px; padding:10px 12px;
+    border:1px solid var(--line); border-radius:6px; background:var(--bg); color:var(--ink);
+    resize:vertical;
+  }
+  input:focus, textarea:focus{border-color:var(--accent); outline:none;}
+  button{
+    font-family:var(--mono); font-weight:700; font-size:13px;
+    background:var(--ink); color:#fff; border:none; border-radius:6px;
+    padding:12px 18px; cursor:pointer; align-self:flex-start; letter-spacing:0.02em;
+  }
+  button:hover{background:var(--accent);}
+  .channels{display:flex; flex-direction:column; gap:10px;}
+  .channel{
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--panel); border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; text-decoration:none; color:var(--ink);
+    font-family:var(--mono); font-size:13px;
+  }
+  .channel:hover{border-color:var(--accent);}
+  .channel span.arrow{color:var(--accent);}
+
+  footer{
+    border-top:1px solid var(--line); padding:28px 0; 
+    font-family:var(--mono); font-size:11px; color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  footer .dot{color:var(--accent);}
+
+  @media (max-width:760px){
+    nav{position:fixed; inset:56px 0 auto 0; background:var(--bg); flex-direction:column;
+        padding:18px 28px; border-bottom:1px solid var(--line); display:none; gap:16px;}
+    nav.open{display:flex;}
+    .nav-toggle{
+      display:inline-flex; background:none; border:1px solid var(--line); border-radius:6px;
+      padding:6px 10px; font-family:var(--mono); font-size:12px; color:var(--ink); cursor:pointer;
+    }
+    .contact-grid{grid-template-columns:1fr;}
+    .metrics{grid-template-columns:1fr;}
+    .log .entry{grid-template-columns:1fr; gap:2px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .caret{animation:none;}
+    .endpoint:hover{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div style="display:flex; align-items:center;">
+      <a class="brand" href="#top">mohammed</a>
+      <span class="status-pill"><span class="dot"></span>operational</span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">menu</button>
+    <nav id="navMenu">
+      <a href="#about">overview</a>
+      <a href="#projects">services</a>
+      <a href="#skills">log</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</div>
+
+<div id="top" class="wrap hero">
+  <p class="eyebrow">backend &amp; systems engineer</p>
+  <h1 class="name">Mohammed</h1>
+  <p class="role">I build the parts of the stack nobody sees until they break — APIs, queues, caches, and the plumbing that keeps them talking to each other reliably.</p>
+
+  <div class="terminal" role="img" aria-label="Terminal window showing a status check">
+    <div class="terminal-head">
+      <span></span><span></span><span></span>
+      <span class="terminal-title">mohammed@localhost</span>
+    </div>
+    <div class="terminal-body">
+      <p class="line"><span class="prompt">$</span> whoami</p>
+      <p class="line"><b>mohammed</b> — backend engineer, systems &amp; infrastructure</p>
+      <p class="line"><span class="prompt">$</span> status --check</p>
+      <p class="line">all services <b>operational</b>. currently shipping something.<span class="caret"></span></p>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><div class="num">4+</div><div class="label">years building</div></div>
+    <div class="metric"><div class="num">12</div><div class="label">systems shipped</div></div>
+    <div class="metric"><div class="num">99.9%</div><div class="label">uptime, mostly</div></div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">overview</p>
+      <h2>What I work on</h2>
+    </div>
+    <div class="about">
+      <p>I'm Mohammed, a backend and systems engineer. I care about the unglamorous parts of software — request routing, data consistency, failure handling, and making sure things stay up when nobody's watching.</p>
+      <p class="soft">This section is a placeholder — swap it for your own bio. Talk about the languages and infrastructure you work with, the kind of problems you like solving, and what you're looking for next.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">services</p>
+      <h2>Projects</h2>
+      <p class="lede">A few systems I've built, presented the way I'd document an API. Replace these with your own — repo links, stack, and a one-line description of what each one actually does.</p>
+    </div>
+
+    <div class="endpoints">
+
+      <div class="endpoint">
+        <div class="endpoint-top">
+          <span class="method get">GET</span>
+          <span class="path">/projects/task-queue-engine</span>
+          <span class="status-code">200 OK</span>
+        </div>
+        <h3>Task Queue Engine</h3>
+        <p>A lightweight distributed job queue with retry policies, dead-letter handling, and horizontal worker scaling. Placeholder description — replace with what it actually does.</p>
+        <div class="endpoint-meta">
+          <div class="tags"><span class="tag">Go</span><span class="tag">Redis</span><span class="tag">Docker</span></div>
+          <div class="endpoint-links"><a href="#">repo →</a><a href="#">docs →</a></div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-top">
+          <span class="method get">GET</span>
+          <span class="path">/projects/rate-limiter</span>
+          <span class="status-code">200 OK</span>
+        </div>
+        <h3>Distributed Rate Limiter</h3>
+        <p>A sliding-window rate limiter deployed as a sidecar, tested under load for a few thousand requests per second. Placeholder — swap in your real project details.</p>
+        <div class="endpoint-meta">
+          <div class="tags"><span class="tag">Python</span><span class="tag">gRPC</span><span class="tag">Postgres</span></div>
+          <div class="endpoint-links"><a href="#">repo →</a><a href="#">docs →</a></div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-top">
+          <span class="method post">POST</span>
+          <span class="path">/projects/auth-gateway</span>
+          <span class="status-code">200 OK</span>
+        </div>
+        <h3>Auth Gateway</h3>
+        <p>A token-based authentication service sitting in front of internal APIs, with role-based access and short-lived session tokens. Replace with your actual writeup.</p>
+        <div class="endpoint-meta">
+          <div class="tags"><span class="tag">Node.js</span><span class="tag">JWT</span><span class="tag">MySQL</span></div>
+          <div class="endpoint-links"><a href="#">repo →</a><a href="#">docs →</a></div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-top">
+          <span class="method get">GET</span>
+          <span class="path">/projects/cache-layer</span>
+          <span class="status-code">200 OK</span>
+        </div>
+        <h3>Write-Through Cache Layer</h3>
+        <p>An in-memory caching layer with write-through consistency to cut database load on hot read paths. Placeholder project — describe the real problem it solved.</p>
+        <div class="endpoint-meta">
+          <div class="tags"><span class="tag">Rust</span><span class="tag">Redis</span></div>
+          <div class="endpoint-links"><a href="#">repo →</a><a href="#">docs →</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">log</p>
+      <h2>Skills &amp; experience</h2>
+      <p class="lede">A running log, most recent first. Edit the entries to reflect your actual history.</p>
+    </div>
+
+    <div class="log">
+      <div class="entry"><span class="ts">2026-05-14</span><span class="lvl ok">INFO</span><span class="msg">Comfortable with <b>Go, Python, and SQL</b> for backend services and data-heavy work.</span></div>
+      <div class="entry"><span class="ts">2026-02-03</span><span class="lvl ok">INFO</span><span class="msg">Built and deployed services on <b>Docker</b> and basic <b>Kubernetes</b> clusters.</span></div>
+      <div class="entry"><span class="ts">2025-10-21</span><span class="lvl ok">INFO</span><span class="msg">Worked with <b>PostgreSQL, Redis, and message queues</b> in production-style setups.</span></div>
+      <div class="entry"><span class="ts">2025-06-09</span><span class="lvl">WARN</span><span class="msg">Still improving at large-scale <b>system design</b> — actively learning.</span></div>
+      <div class="entry"><span class="ts">2025-01-17</span><span class="lvl ok">INFO</span><span class="msg">Started building backend projects seriously, moving from scripts to services.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">contact</p>
+      <h2>Get in touch</h2>
+    </div>
+
+    <div class="contact-grid">
+      <div class="req-block">
+        <div class="req-head"><span class="method post">POST</span>/contact</div>
+        <form onsubmit="return false;">
+          <div>
+            <label for="name">name</label>
+            <input id="name" type="text" placeholder="Your name">
+          </div>
+          <div>
+            <label for="email">email</label>
+            <input id="email" type="email" placeholder="you@example.com">
+          </div>
+          <div>
+            <label for="message">message</label>
+            <textarea id="message" rows="4" placeholder="Say hello"></textarea>
+          </div>
+          <button type="submit">send request</button>
+        </form>
+      </div>
+
+      <div class="channels">
+        <a class="channel" href="https://github.com/" target="_blank" rel="noopener">GitHub <span class="arrow">→</span></a>
+        <a class="channel" href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn <span class="arrow">→</span></a>
+        <a class="channel" href="mailto:mohammed@example.com">mohammed@example.com <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+    <span><span class="dot">●</span> all systems operational</span>
+    <span>© 2026 Mohammed — built with care</span>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const menu = document.getElementById('navMenu');
+  toggle.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    menu.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+
+</body>
+</html>
